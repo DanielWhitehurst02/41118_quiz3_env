@@ -118,14 +118,14 @@ class SimpleDrivingEnv(gym.Env):
              self.np_random.uniform(-9, -5))
         self.goal = (x, y)
 
-        # # for i in range(5)
-        # x = (self.np_random.uniform(5, 9) if self.np_random.integers(2) else
-        #      self.np_random.uniform(-9, -5))
-        # y = (self.np_random.uniform(5, 9) if self.np_random.integers(2) else
-        #      self.np_random.uniform(-9, -5))
+        # for i in range(5)
+        x = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
+        y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
 
-        x = 2
-        y = 3
+        # x = 2
+        # y = 3
         self.wall = (x, y)
         
         self.done = False
