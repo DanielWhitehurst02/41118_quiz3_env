@@ -70,7 +70,9 @@ class SimpleDrivingEnv(gym.Env):
 
           carpos, carorn = self._p.getBasePositionAndOrientation(self.car.car)
           goalpos, goalorn = self._p.getBasePositionAndOrientation(self.goal_object.goal)
-          wallpos, goalorn = self._p.getBasePositionAndOrientation(self.wall_object.goal)
+          wallpos, wallorn = self._p.getBasePositionAndOrientation(self.wall_object.goal)
+          wallpos1, wallorn1 = self._p.getBasePositionAndOrientation(self.wall_object.goal)
+          wallpos2, wallorn2 = self._p.getBasePositionAndOrientation(self.wall_object.goal)
           car_ob = self.getExtendedObservation()
 
           if self._termination():
@@ -85,12 +87,20 @@ class SimpleDrivingEnv(gym.Env):
                                   (carpos[1] - goalpos[1]) ** 2))
         dist_to_wall = math.sqrt(((carpos[0] - wallpos[0]) ** 2 +
                                   (carpos[1] - wallpos[1]) ** 2))
+        dist_to_wall1 = math.sqrt(((carpos[0] - wallpos1[0]) ** 2 +
+                                  (carpos[1] - wallpos1[1]) ** 2))
+        dist_to_wall2 = math.sqrt(((carpos[0] - wallpos2[0]) ** 2 +
+                                  (carpos[1] - wallpos2[1]) ** 2))
         # reward = max(self.prev_dist_to_goal - dist_to_goal, 0)
         reward = -dist_to_goal
         self.prev_dist_to_goal = dist_to_goal
 
         if dist_to_wall < 2:
             reward -= 30
+        if dist_to_wall1 < 2:
+        reward -= 30
+        if dist_to_wall2 < 2:
+        reward -= 30
 
         # Done by reaching goal
         if dist_to_goal < 1.5 and not self.reached_goal:
