@@ -41,6 +41,8 @@ class SimpleDrivingEnv(gym.Env):
         self.car = None
         self.goal_object = None
         self.goal = None
+        self.wall = None
+        self.wall_object = None
         self.done = False
         self.prev_dist_to_goal = None
         self.rendered_img = None
@@ -64,6 +66,7 @@ class SimpleDrivingEnv(gym.Env):
 
           carpos, carorn = self._p.getBasePositionAndOrientation(self.car.car)
           goalpos, goalorn = self._p.getBasePositionAndOrientation(self.goal_object.goal)
+          wallpos, goalorn = self._p.getBasePositionAndOrientation(self.wall_object.goal)
           car_ob = self.getExtendedObservation()
 
           if self._termination():
@@ -76,9 +79,14 @@ class SimpleDrivingEnv(gym.Env):
                                   # (car_ob[1] - self.goal[1]) ** 2))
         dist_to_goal = math.sqrt(((carpos[0] - goalpos[0]) ** 2 +
                                   (carpos[1] - goalpos[1]) ** 2))
+        dist_to_wall = math.sqrt(((carpos[0] - wallpos[0]) ** 2 +
+                                  (carpos[1] - wallpos[1]) ** 2))
         # reward = max(self.prev_dist_to_goal - dist_to_goal, 0)
         reward = -dist_to_goal
         self.prev_dist_to_goal = dist_to_goal
+
+        if dist_to_wall < 2:
+            reward -= 30
 
         # Done by reaching goal
         if dist_to_goal < 1.5 and not self.reached_goal:
@@ -110,13 +118,19 @@ class SimpleDrivingEnv(gym.Env):
              self.np_random.uniform(-9, -5))
         self.goal = (x, y)
 
-        
+        # for i in range(5)
+        x = (self.np_random.uniform(5, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -5))
+        y = (self.np_random.uniform(5, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -5))
+        self.wall = (x, y)
         
         self.done = False
         self.reached_goal = False
 
         # Visual element of the goal
         self.goal_object = Goal(self._p, self.goal)
+        self.wall_object = Wall(self._p, self.wall)
 
         # Get observation to return
         carpos = self.car.get_observation()
