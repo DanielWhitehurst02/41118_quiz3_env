@@ -130,16 +130,16 @@ class SimpleDrivingEnv(gym.Env):
 
         self.wall = (x, y)
 
-        x = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
-             self.np_random.uniform(-9, -1))
-        y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
-             self.np_random.uniform(-9, -1))
+        x = (self.np_random.uniform(3, 7) if self.np_random.integers(2) else
+             self.np_random.uniform(-7, -3))
+        y = (self.np_random.uniform(3, 7) if self.np_random.integers(2) else
+             self.np_random.uniform(-7, -3))
         self.wall1 = (x, y)
 
-        x = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
-             self.np_random.uniform(-9, -1))
-        y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
-             self.np_random.uniform(-9, -1))
+        x = (self.np_random.uniform(1, 5) if self.np_random.integers(2) else
+             self.np_random.uniform(-5, -1))
+        y = (self.np_random.uniform(1, 5) if self.np_random.integers(2) else
+             self.np_random.uniform(-5, -1))
 
         self.wall2 = (x, y)
 
