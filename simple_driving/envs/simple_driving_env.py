@@ -43,6 +43,10 @@ class SimpleDrivingEnv(gym.Env):
         self.goal = None
         self.wall = None
         self.wall_object = None
+        self.wall1 = None
+        self.wall_object1 = None
+        self.wall2 = None
+        self.wall_object2 = None
         self.done = False
         self.prev_dist_to_goal = None
         self.rendered_img = None
@@ -124,9 +128,21 @@ class SimpleDrivingEnv(gym.Env):
         y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
              self.np_random.uniform(-9, -1))
 
-        # x = 2
-        # y = 3
         self.wall = (x, y)
+
+        x = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
+        y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
+        self.wall1 = (x, y)
+
+        x = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
+        y = (self.np_random.uniform(1, 9) if self.np_random.integers(2) else
+             self.np_random.uniform(-9, -1))
+
+        self.wall2 = (x, y)
+
         
         self.done = False
         self.reached_goal = False
@@ -134,6 +150,8 @@ class SimpleDrivingEnv(gym.Env):
         # Visual element of the goal
         self.goal_object = Goal(self._p, self.goal)
         self.wall_object = Wall(self._p, self.wall)
+        self.wall_object1 = Wall(self._p, self.wall1)
+        self.wall_object2 = Wall(self._p, self.wall2)
 
         # Get observation to return
         carpos = self.car.get_observation()
