@@ -6,6 +6,7 @@ from pybullet_utils import bullet_client as bc
 from simple_driving.resources.car import Car
 from simple_driving.resources.plane import Plane
 from simple_driving.resources.goal import Goal
+from simple_driving.resources.wall import Wall
 import matplotlib.pyplot as plt
 import time
 
@@ -108,6 +109,9 @@ class SimpleDrivingEnv(gym.Env):
         y = (self.np_random.uniform(5, 9) if self.np_random.integers(2) else
              self.np_random.uniform(-9, -5))
         self.goal = (x, y)
+
+        
+        
         self.done = False
         self.reached_goal = False
 
