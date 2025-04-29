@@ -98,9 +98,9 @@ class SimpleDrivingEnv(gym.Env):
         if dist_to_wall < 2:
             reward -= 30
         if dist_to_wall1 < 2:
-        reward -= 30
+            reward -= 30
         if dist_to_wall2 < 2:
-        reward -= 30
+            reward -= 30
 
         # Done by reaching goal
         if dist_to_goal < 1.5 and not self.reached_goal:
